@@ -39,15 +39,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="configs"
-        options={{
-          title: "Config",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "cog" : "cog-outline"} color={color} />
-          ),
-        }}
-      />
     </Tabs>
   );
 }

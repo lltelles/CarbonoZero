@@ -1,0 +1,17 @@
+plugins {
+    id 'com.android.application'
+
+    // Add this line to apply the Google services plugin
+    id 'com.google.gms.google-services'
+}
+
+dependencies {
+    // Import the Firebase BoM (Bill of Materials)
+    implementation platform('com.google.firebase:firebase-bom:33.2.0')
+
+    // Add Firebase SDK dependencies (e.g., Authentication, Firestore, etc.)
+    // When using BoM, you don't need to specify versions for Firebase libraries
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    // Add other Firebase services you want to use here
+}

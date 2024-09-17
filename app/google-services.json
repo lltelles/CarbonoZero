@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "465890776683",
+    "firebase_url": "https://carbonozero-db7dd-default-rtdb.firebaseio.com",
+    "project_id": "carbonozero-db7dd",
+    "storage_bucket": "carbonozero-db7dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465890776683:android:a30a608df932f84994832e",
+        "android_client_info": {
+          "package_name": "com.yourcompany.carbonozero"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhrdYGj6eiFznDozjssL_MXAOgD3IZJrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
