@@ -13,19 +13,19 @@ const CARBON_PRICE_API_URL = "https://api.carbonprice.com/v1/prices";
 export default function TabTwoScreen() {
   const [carbonPrice, setCarbonPrice] = useState(null);
 
-  useEffect(() => {
-    fetchCarbonPrice();
-  }, []);
+  // useEffect(() => {
+  //   fetchCarbonPrice();
+  // }, []);
 
-  const fetchCarbonPrice = async () => {
-    try {
-      const response = await fetch(CARBON_PRICE_API_URL);
-      const result = await response.json();
-      setCarbonPrice(result.price);
-    } catch (error) {
-      console.error("Erro ao buscar preços de carbono", error);
-    }
-  };
+  // const fetchCarbonPrice = async () => {
+  //   try {
+  //     const response = await fetch(CARBON_PRICE_API_URL);
+  //     const result = await response.json();
+  //     setCarbonPrice(result.price);
+  //   } catch (error) {
+  //     console.error("Erro ao buscar preços de carbono", error);
+  //   }
+  // };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
