@@ -39,12 +39,7 @@ export default function HomeScreen() {
       // Show an alert if the data is over 50
       if (data > 30) {
         setHistory((prevHistory) => [...prevHistory, data]);
-        // Alert.alert(
-        //   "Warning!",
-        //   `Sensor value is over the threshold: ${data}`,
-        //   [{ text: "OK" }],
-        //   { cancelable: true }
-        // );
+        
       }
     });
 

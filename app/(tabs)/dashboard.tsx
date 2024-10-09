@@ -11,6 +11,21 @@ import { ThemedView } from "@/components/ThemedView";
 
 const CARBON_PRICE_API_URL = "https://api.carbonprice.com/v1/prices";
 export default function TabTwoScreen() {
+  const [carbonPrice, setCarbonPrice] = useState(null);
+
+  // useEffect(() => {
+  //   fetchCarbonPrice();
+  // }, []);
+
+  // const fetchCarbonPrice = async () => {
+  //   try {
+  //     const response = await fetch(CARBON_PRICE_API_URL);
+  //     const result = await response.json();
+  //     setCarbonPrice(result.price);
+  //   } catch (error) {
+  //     console.error("Erro ao buscar preços de carbono", error);
+  //   }
+  // };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -19,7 +34,7 @@ export default function TabTwoScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Mercados de Carbono</ThemedText>
+        <ThemedText type="title">Dashboard page</ThemedText>
       </ThemedView>
       <ThemedText>
         Aqui você pode acompanhar em tempo real os preços de Créditos de Carbono
@@ -41,6 +56,13 @@ export default function TabTwoScreen() {
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
+      {carbonPrice ? (
+        <Text style={styles.priceText}>
+          Preço Atual dos Créditos de Carbono: ${carbonPrice}
+        </Text>
+      ) : (
+        <Text>Buscando preço atual dos créditos de carbono...</Text>
+      )}
       {/* Gráficos e Introdução podem ser adicionados aqui */}
     </ParallaxScrollView>
   );
