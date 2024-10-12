@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    fontFamily: "Oxygen-Regular",
   },
   priceText: {
     fontSize: 18,

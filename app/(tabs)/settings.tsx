@@ -1,69 +1,88 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { View, Text, StyleSheet } from "react-native";
-
+import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
-
-import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "@/firebaseConfig";
+import { signOut } from "firebase/auth";
 
-const CARBON_PRICE_API_URL = "https://api.carbonprice.com/v1/prices";
 export default function TabTwoScreen() {
-  const [carbonPrice, setCarbonPrice] = useState(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [countdown, setCountdown] = useState(0);
+  const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   fetchCarbonPrice();
-  // }, []);
+  // Function to toggle the switch
+  const calibrarSensor = () => {
+    let timer = 10; // Starting time for countdown
+    setCountdown(timer);
+    const interval = setInterval(() => {
+      timer -= 1;
+      setCountdown(timer); // Update the countdown
 
-  // const fetchCarbonPrice = async () => {
-  //   try {
-  //     const response = await fetch(CARBON_PRICE_API_URL);
-  //     const result = await response.json();
-  //     setCarbonPrice(result.price);
-  //   } catch (error) {
-  //     console.error("Erro ao buscar preços de carbono", error);
-  //   }
-  // };
+      // When countdown reaches zero, show the alert and clear the interval
+      if (timer === 0) {
+        clearInterval(interval);
+        Alert.alert("Finalizado!", "O sensor foi calibrado com sucesso.");
+      }
+    }, 1000); // 1 second intervals
+  };
+
+  // Get current authenticated user
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserEmail(user.email); // Set the email of the authenticated user
+    }
+  }, []);
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      console.log("User signed out successfully");
+      // Redirect to login or entry page after logout
+      navigation.replace("AppEntry");
+    } catch (error) {
+      console.error("Error signing out:", error.message);
+      Alert.alert("Logout Error", error);
+    }
+  };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
+        <Ionicons size={310} name="cog" style={styles.headerImage} />
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Mercados de Carbono</ThemedText>
+        <ThemedText type="title">
+          Olá,{" "}
+          {userEmail && <ThemedText type="subtitle">{userEmail}</ThemedText>}{" "}
+        </ThemedText>
+        {/* Display user's email */}
       </ThemedView>
-      <ThemedText>
-        Aqui você pode acompanhar em tempo real os preços de Créditos de Carbono
-        ao redor do mundo.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      {carbonPrice ? (
-        <Text style={styles.priceText}>
-          Preço Atual dos Créditos de Carbono: ${carbonPrice}
-        </Text>
-      ) : (
-        <Text>Buscando preço atual dos créditos de carbono...</Text>
-      )}
+
+      {/* Settings Option with Switch */}
+      <ThemedView style={styles.optionContainer}>
+        <ThemedText>Calibragem do sensor</ThemedText>
+        <Button onPress={calibrarSensor} title="Calibrar"></Button>
+      </ThemedView>
+      {/* <ThemedView style={styles.optionContainer}>
+        <ThemedText>Ajuda</ThemedText>
+      </ThemedView> */}
+
       {/* Gráficos e Introdução podem ser adicionados aqui */}
+      <Button title="Sair" onPress={logout} color={"#eee"} />
+      {/* Display the countdown */}
+      {countdown > 0 && (
+        <View style={styles.countdownContainer}>
+          <Text style={styles.countdownText}>
+            Calibrando... {countdown} segundos
+          </Text>
+        </View>
+      )}
     </ParallaxScrollView>
   );
 }
@@ -87,8 +106,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
   },
-  priceText: {
+  optionContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 20,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#ccc",
+    paddingVertical: 10,
+  },
+  countdownContainer: {
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  countdownText: {
     fontSize: 18,
-    color: "green",
+    color: "#ccc",
   },
 });

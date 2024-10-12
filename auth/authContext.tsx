@@ -1,10 +1,9 @@
-// context/AuthContext.tsx
-
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { firebase } from "@react-native-firebase/auth"; // adjust the import based on your setup
+import { getAuth, onAuthStateChanged, User } from "firebase/auth"; // Use Firebase JS SDK
+import { auth } from "../firebaseConfig"; // Make sure this imports from your Firebase setup
 
 interface AuthContextType {
-  user: firebase.User | null;
+  user: User | null; // Use User type from firebase/auth
   loading: boolean;
 }
 
@@ -16,16 +15,16 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup on unmount
   }, []);
 
   return (

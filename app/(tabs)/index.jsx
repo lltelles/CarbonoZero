@@ -47,17 +47,17 @@ export default function HomeScreen() {
     // return () => sensorDataRef.off();
   }, []);
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      console.log("User signed out successfully");
-      // Redirect to login or entry page after logout
-      navigation.replace("AppEntry");
-    } catch (error) {
-      console.error("Error signing out:", error.message);
-      Alert.alert("Logout Error", error);
-    }
-  };
+  // const logout = async () => {
+  //   try {
+  //     await signOut(auth);
+  //     console.log("User signed out successfully");
+  //     // Redirect to login or entry page after logout
+  //     navigation.replace("AppEntry");
+  //   } catch (error) {
+  //     console.error("Error signing out:", error.message);
+  //     Alert.alert("Logout Error", error);
+  //   }
+  // };
 
   const sumAllDataHistory = () => {
     if (!history || history.length == 0) {
@@ -85,7 +85,7 @@ export default function HomeScreen() {
         headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
         headerImage={
           <Image
-            source={require("@/assets/images/folha.jpg")}
+            source={require("@/assets/images/partial-react-logo.png")}
             style={styles.reactLogo}
           />
         }
@@ -129,7 +129,7 @@ export default function HomeScreen() {
             </Text>
           </View>
           <Button title="Resetar dados" onPress={resetAllData} />
-          <Button title="Logout" onPress={logout} />
+          {/* <Button title="Logout" onPress={logout} /> */}
         </View>
       </ParallaxScrollView>
     </>
@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     color: "#ccc",
   },
   reactLogo: {
-    height: "100%",
-    width: "100%",
+    height: 178,
+    width: 290,
     bottom: 0,
     left: 0,
     position: "absolute",
