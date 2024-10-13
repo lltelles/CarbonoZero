@@ -6,14 +6,13 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import { WebView } from "react-native-webview";
 
 import React, { useEffect, useState, useRef, memo } from "react";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import TradingViewWidget from "@/components/TradingViewWidget";
+// import TradingViewWidget from "@/components/TradingViewWidget";
 
 export default function TabTwoScreen() {
   return (
@@ -49,11 +48,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   container: {
-    flex: 1,
-    width: "100%",
-    height: 400,
-  },
-  webView: {
     flex: 1,
     width: "100%",
     height: 400,

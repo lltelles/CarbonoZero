@@ -6,6 +6,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  NativeModules
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
@@ -18,6 +19,7 @@ import {
   ScrollView,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
+import ProgressBar from "@/components/GaugeChart";
 
 export default function HomeScreen() {
   const [sensorData, setSensorData] = useState(null);
@@ -79,6 +81,10 @@ export default function HomeScreen() {
     setLoading(true)
   }
 
+  console.log(NativeModules.UIManager);
+  const isRNSVGCircleRegistered = NativeModules.UIManager.getViewManagerConfig('RNSVGCircle') !== undefined;
+console.log('Is RNSVGCircle registered:', isRNSVGCircleRegistered);
+
   return (
     <>
       <ParallaxScrollView
@@ -90,6 +96,7 @@ export default function HomeScreen() {
           />
         }
       >
+        <ProgressBar/>
         <View style={styles.container}>
           <Text style={styles.title}>Emissões de Carbono</Text>
           {loading ? (
@@ -131,6 +138,7 @@ export default function HomeScreen() {
           <Button title="Resetar dados" onPress={resetAllData} />
           {/* <Button title="Logout" onPress={logout} /> */}
         </View>
+        
       </ParallaxScrollView>
     </>
   );
@@ -145,6 +153,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    marginTop:100,
     marginBottom: 20,
     color: "#ccc",
     fontFamily: "Oxygen-Bold",

@@ -28,12 +28,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="dashboard"
+        name="market"
         options={{
-          title: "Dashboard",
+          title: "Market",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "grid-outline" : "grid-outline"}
+              name={focused ? "stats-chart" : "stats-chart-outline"}
               color={color}
             />
           ),
@@ -45,7 +45,7 @@ export default function TabLayout() {
           title: "Explore",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "book-outline" : "book-outline"}
+              name={focused ? "leaf" : "leaf-outline"}
               color={color}
             />
           ),
@@ -56,7 +56,7 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "cog" : "cog"} color={color} />
+            <TabBarIcon name={focused ? "cog" : "cog-outline"} color={color} />
           ),
         }}
       />

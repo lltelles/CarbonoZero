@@ -74,15 +74,16 @@ export default function TabTwoScreen() {
       </ThemedView> */}
 
       {/* Gráficos e Introdução podem ser adicionados aqui */}
-      <Button title="Sair" onPress={logout} color={"#eee"} />
       {/* Display the countdown */}
       {countdown > 0 && (
         <View style={styles.countdownContainer}>
-          <Text style={styles.countdownText}>
-            Calibrando... {countdown} segundos
-          </Text>
+          <Text style={styles.countdownText}>Calibrando... ({countdown})</Text>
         </View>
       )}
+      <View style={styles.logoutContainer}>
+        <Button title="Sair" onPress={logout} color={"#eee"} />
+        <Ionicons size={24} name="exit-outline" color={"#eee"} />
+      </View>
     </ParallaxScrollView>
   );
 }
@@ -122,5 +123,10 @@ const styles = StyleSheet.create({
   countdownText: {
     fontSize: 18,
     color: "#ccc",
+  },
+  logoutContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
