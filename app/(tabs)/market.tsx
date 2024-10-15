@@ -23,15 +23,13 @@ export default function TabTwoScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Dashboard page</ThemedText>
+        <ThemedText type="title">Market page</ThemedText>
       </ThemedView>
       <ThemedText>
         Aqui você pode acompanhar em tempo real os preços de Créditos de Carbono
         ao redor do mundo.
       </ThemedText>
-      <View style={styles.container}>
-        <TradingViewWidget />
-      </View>
+      <View style={styles.container}>{/* <TradingViewWidget /> */}</View>
     </ParallaxScrollView>
   );
 }

@@ -14,7 +14,7 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedText = Animated.createAnimatedComponent(TextInput);
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const STROKE_WIDTH = 20;
+const STROKE_WIDTH = 10;
 const radius = (SCREEN_WIDTH - STROKE_WIDTH) / 2.5;
 const diameter = radius * 2;
 const circumference = radius * Math.PI;
@@ -52,7 +52,7 @@ const ProgressBar = () => {
 
   const animatedTextProps = useAnimatedProps(() => {
     return {
-      text: `${Math.round(percentage.value)}ppm`,
+      text: `${Math.round(percentage.value)} ppm`,
     };
   });
 
@@ -128,14 +128,14 @@ const ProgressBar = () => {
             {
               position: "absolute",
               left: (diameter + STROKE_WIDTH) / 2 - 80,
-              top: (radius + STROKE_WIDTH / 2) / 2 - 25,
-              width: 160,
-              height: 160,
+              top: (radius + STROKE_WIDTH / 2) / 2 - 0,
+              width: 155,
+              height: 155,
               textAlign: "center",
               textAlignVertical: "center",
               color: "#FFFFFF",
-              fontSize: 32,
-              fontWeight: "bold",
+              fontSize: 28,
+              //   fontWeight: "bold",
               borderWidth: 1,
               borderRadius: 75,
             },

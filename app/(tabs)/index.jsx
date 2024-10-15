@@ -9,9 +9,8 @@ import {
   NativeModules
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "@/firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
+// import { signOut } from "firebase/auth";
+// import { auth } from "@/firebaseConfig";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { database } from "../../firebaseConfig"; // Import the database from your Firebase config
 import { ref, onValue } from "firebase/database"; // Import necessary methods
@@ -27,7 +26,6 @@ export default function HomeScreen() {
   const [history, setHistory] = useState([]);
   const [sumHistory, setSumHistory] = useState(0);
 
-  const navigation = useNavigation();
 
   useEffect(() => {
     const sensorDataRef = ref(database, "/sensorData/mq135");
@@ -96,16 +94,16 @@ console.log('Is RNSVGCircle registered:', isRNSVGCircleRegistered);
           />
         }
       >
+          <Text style={styles.title}>Emissões de Carbono</Text>
         <ProgressBar/>
         <View style={styles.container}>
-          <Text style={styles.title}>Emissões de Carbono</Text>
-          {loading ? (
-            <ActivityIndicator size="large" color="fff" /> // Spinner while loading
+          {/* {loading ? (
+            <ActivityIndicator size="large" color="fff" /> 
           ) : (
             <View style={styles.dataSensorContainer}>
               <Text style={styles.dataSensor}>{sensorData}</Text>
             </View>
-          )}
+          )} */}
 
           <Text style={styles.historyTitle}>
             Registro de emissões acima de 30ppm
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    marginTop:100,
+    // marginTop:100,
     marginBottom: 20,
     color: "#ccc",
     fontFamily: "Oxygen-Bold",
