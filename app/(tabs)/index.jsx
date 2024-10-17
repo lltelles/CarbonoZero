@@ -4,60 +4,22 @@ import {
   Button,
   StyleSheet,
   Image,
-  Alert,
-  ActivityIndicator,
-  NativeModules
+  NativeModules,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-// import { signOut } from "firebase/auth";
-// import { auth } from "@/firebaseConfig";
+import React, { useState } from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { database } from "../../firebaseConfig"; // Import the database from your Firebase config
-import { ref, onValue } from "firebase/database"; // Import necessary methods
-import {
-  ScrollView,
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
 import ProgressBar from "@/components/GaugeChart";
+import DataChart from "@/components/barChart";
+
+import * as Font from "expo-font"
+import { ThemedText } from "@/components/ThemedText";
 
 export default function HomeScreen() {
   const [sensorData, setSensorData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
   const [sumHistory, setSumHistory] = useState(0);
 
-
-  useEffect(() => {
-    const sensorDataRef = ref(database, "/sensorData/mq135");
-
-    // Listen for changes to the sensor data
-    onValue(sensorDataRef, (snapshot) => {
-      const data = snapshot.val();
-      setSensorData(data);
-      setLoading(false);
-
-      // Show an alert if the data is over 50
-      if (data > 30) {
-        setHistory((prevHistory) => [...prevHistory, data]);
-        
-      }
-    });
-
-    // Optionally clean up the listener when the component unmounts
-    // return () => sensorDataRef.off();
-  }, []);
-
-  // const logout = async () => {
-  //   try {
-  //     await signOut(auth);
-  //     console.log("User signed out successfully");
-  //     // Redirect to login or entry page after logout
-  //     navigation.replace("AppEntry");
-  //   } catch (error) {
-  //     console.error("Error signing out:", error.message);
-  //     Alert.alert("Logout Error", error);
-  //   }
-  // };
 
   const sumAllDataHistory = () => {
     if (!history || history.length == 0) {
@@ -73,15 +35,16 @@ export default function HomeScreen() {
   };
 
   const resetAllData = () => {
-    setSensorData(null)
-    setSumHistory(null)
-    setHistory([])
-    setLoading(true)
-  }
+    setSensorData(null);
+    setSumHistory(null);
+    setHistory([]);
+    setLoading(true);
+  };
 
   console.log(NativeModules.UIManager);
-  const isRNSVGCircleRegistered = NativeModules.UIManager.getViewManagerConfig('RNSVGCircle') !== undefined;
-console.log('Is RNSVGCircle registered:', isRNSVGCircleRegistered);
+  const isRNSVGCircleRegistered =
+    NativeModules.UIManager.getViewManagerConfig("RNSVGCircle") !== undefined;
+  console.log("Is RNSVGCircle registered:", isRNSVGCircleRegistered);
 
   return (
     <>
@@ -94,55 +57,83 @@ console.log('Is RNSVGCircle registered:', isRNSVGCircleRegistered);
           />
         }
       >
-          <Text style={styles.title}>Emissões de Carbono</Text>
-        <ProgressBar/>
-        <View style={styles.container}>
-          {/* {loading ? (
-            <ActivityIndicator size="large" color="fff" /> 
-          ) : (
-            <View style={styles.dataSensorContainer}>
-              <Text style={styles.dataSensor}>{sensorData}</Text>
-            </View>
-          )} */}
-
-          <Text style={styles.historyTitle}>
-            Registro de emissões acima de 30ppm
-          </Text>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <ScrollView style={styles.historyContainer}>
-              {history.length > 0 ? (
-                history.map((value, index) => (
-                  <Text key={index} style={styles.historyItem}>
-                    {value}
-                  </Text>
-                ))
-              ) : (
-                <Text style={styles.historyItem}>Sem registros</Text>
-              )}
-            </ScrollView>
-          </GestureHandlerRootView>
-
-          <View style={styles.sumHistoryContainer}>
-            <Text style={styles.sumHistory}>
-              Verificar quantidade de carbono já emitido
-            </Text>
-            <Button title="Verificar" onPress={sumAllDataHistory} />
+        <Text style={styles.title}>Emissões de Carbono</Text>
+        <View style={styles.chartsContainer}>
+          <View style={styles.gaugeChart}>
+            <ProgressBar sensorData={sensorData} />
           </View>
-          <View>
-            <Text style={styles.sumHistory}>
-              Quantidade total de carbono emitido: {sumHistory} ppm
-            </Text>
+          <View style={styles.barChart}>
+            <ThemedText style={styles.barChartTitle}>
+              Registro de emissões acima de 30ppm
+            </ThemedText>
+            <DataChart sensorData={sensorData} style={styles.barChart} />
+          </View>
+        </View>
+        <View style={styles.container}>
+          <View style={styles.infosContainer}>
+              <View style={styles.sumHistoryContainer}>
+                <View>
+                  <Text style={styles.sumHistoryTitle}>
+                    Quantidade total de carbono
+                  </Text>
+                  {/* <Button title="Verificar" onPress={sumAllDataHistory} /> */}
+                </View>
+                <View style={styles.sumHistory}>
+                  <Text style={styles.sumHistoryText}>{sumHistory} ppm</Text>
+                </View>
+              </View>
+            <View style={styles.sumHistoryContainer}>
+              <View>
+                <Text style={styles.sumHistoryTitle}>
+                  Conversão ppm para Crédito de carbono
+                </Text>
+                {/* <Button title="Verificar" onPress={sumAllDataHistory} /> */}
+              </View>
+              <View style={styles.sumHistory}>
+                <Text style={styles.sumHistoryText}>{sumHistory} </Text>
+              </View>
+            </View>
+            <View style={styles.sumHistoryContainer}>
+              <View>
+                <Text style={styles.sumHistoryTitle}>Conversão para real</Text>
+                {/* <Button title="Verificar" onPress={sumAllDataHistory} /> */}
+              </View>
+              <View style={styles.sumHistory}>
+                <Text style={styles.sumHistoryText}>R$ {sumHistory}</Text>
+              </View>
+            </View>
           </View>
           <Button title="Resetar dados" onPress={resetAllData} />
-          {/* <Button title="Logout" onPress={logout} /> */}
         </View>
-        
       </ParallaxScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  chartsContainer: {
+    flexDirection: "column",
+    gap: 150,
+    // borderWidth:1,
+    // borderColor:"red"
+  },
+  gaugeChart: {
+    // borderWidth: 1,
+    // borderColor: "red",
+  },
+  barChartTitle: {
+    fontSize: 16,
+    fontWeight: "light",
+    marginTop: 20,
+    marginBottom: 10,
+    color: "#ccc",
+    textAlign: "center",
+    fontFamily: "Wellfleet-Regular",
+  },
+  barChart: {
+    // borderWidth: 1,
+    // borderColor: "red",
+  },
   container: {
     flex: 1,
     height: 600,
@@ -176,13 +167,6 @@ const styles = StyleSheet.create({
     color: "#ccc",
     fontSize: 32,
   },
-  historyTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 10,
-    color: "#ccc",
-  },
   historyContainer: {
     width: "100%",
     maxHeight: 200, // Set a max height for scrolling
@@ -197,11 +181,44 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     paddingBottom: 5,
   },
-  sumHistoryContainer:{
-marginTop:10
+  infosContainer:{
+    flexDirection:"column",
+    alignItems:"center"
+  },
+
+  sumHistoryContainer: {
+    width:"110%",
+    marginTop: 50,
+    borderWidth: .5,
+    borderColor:"rgba(255, 255, 255, 0.1)",
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+    shadowColor: "#eee",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: .34,
+    shadowRadius: 6.27,
+    elevation: 10,
+  },
+  sumHistoryTitle: {
+    color: "#fff",
+    textAlign: "center",
   },
   sumHistory: {
+    borderWidth: 1,
+    borderColor: "#eee",
     textAlign: "center",
     color: "#ccc",
+    borderRadius: 25,
+    padding: 5,
+    backgroundColor: "#fff",
+    width: "80%",
+  },
+  sumHistoryText: {
+    textAlign: "center",
+    color: "#333",
   },
 });
