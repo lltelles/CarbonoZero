@@ -95,7 +95,7 @@ console.log('Is RNSVGCircle registered:', isRNSVGCircleRegistered);
         }
       >
           <Text style={styles.title}>Emissões de Carbono</Text>
-        <ProgressBar/>
+        {/*<ProgressBar/> */}
         <View style={styles.container}>
           {/* {loading ? (
             <ActivityIndicator size="large" color="fff" /> 
