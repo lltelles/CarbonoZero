@@ -1,8 +1,8 @@
+import React, { useEffect, useState } from "react";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { View, Text, StyleSheet, Image } from "react-native";
-8;
-
-import React from "react";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
@@ -13,6 +13,25 @@ import { ThemedView } from "@/components/ThemedView";
 const CARBON_PRICE_API_URL = "https://api.carbonprice.com/v1/prices";
 
 export default function TabTwoScreen() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      "Wellfleet-Regular": require("@/assets/fonts/Wellfleet-Regular.ttf"),
+      "Oxygen-light": require("@/assets/fonts/Oxygen-Light.ttf"),
+      ...Ionicons.font, // Carregar as fontes do Ionicons
+    });
+    setFontsLoaded(true);
+  };
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -31,19 +50,8 @@ export default function TabTwoScreen() {
       </ThemedText>
       <Collapsible title="CONCEITO">
         <ThemedText style={styles.contentText}>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
+          {"O crédito de carbono é um mecanismo que visa reduzir as emissões de gases de efeito estufa. Cada crédito representa a remoção ou a não emissão de uma tonelada de CO2. Empresas ou países que conseguem reduzir suas emissões além do necessário podem vender esses créditos para outros que não atingiram suas metas. Isso cria um incentivo econômico para projetos que promovem sustentabilidade, como reflorestamento e uso de energias renováveis. Surgido com o Protocolo de Quioto, o sistema busca combater as mudanças climáticas ao limitar e compensar as emissões globais. "}
         </ThemedText>
-        <ThemedText style={styles.contentText}>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText style={styles.linkText}>Learn more</ThemedText>
-        </ExternalLink>
       </Collapsible>
 
       <Collapsible title="COMO FUNCIONA ?">
@@ -125,6 +133,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     marginVertical: 8,
     margin: 4,
+    fontFamily: "SpaceMono-Regular",
   },
   linkText: {
     color: "blue",

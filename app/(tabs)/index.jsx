@@ -25,6 +25,8 @@ export default function HomeScreen() {
           />
         }
       >
+          <Text style={styles.title}>Emissões de Carbono</Text>
+        <ProgressBar/> 
         <Text style={styles.title}>Emissões de Carbono</Text>
         <View style={styles.chartsContainer}>
           <View style={styles.gaugeChart}>
