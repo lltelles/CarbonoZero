@@ -32,21 +32,24 @@ const ProgressBar: React.FC = () => {
   });
 
   const strokeColor = useDerivedValue(() => {
+    const clampedValue = Math.max(0, Math.min(percentage.value, 400)); // Clamping the value between 0 and 500
     return interpolateColor(
-      percentage.value,
-      [0, 250, 500],
-      ["#74c476", "#41ab5d", "#f03d32"]
+      clampedValue,
+      [0, 500, 1500],
+      ["#74c476", "#fd8c00", "#f03d32"]
     );
   });
 
   const animatedTextStyle = useAnimatedStyle(() => {
+    const backgroundColor = strokeColor.value; // Ensure this stays consistent
+    // console.log("Background color for text:", backgroundColor);
     return {
-      backgroundColor: strokeColor.value,
+      backgroundColor,
     };
   });
 
   const animatedProps = useAnimatedProps(() => {
-    const strokeDashoffset = circumference * (1 - percentage.value / 1000);
+    const strokeDashoffset = circumference * (1 - percentage.value / 2000);
     return {
       strokeDashoffset,
       stroke: strokeColor.value,

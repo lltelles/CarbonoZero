@@ -69,11 +69,7 @@ export default function TabTwoScreen() {
         <ThemedText>Calibragem do sensor</ThemedText>
         <Button onPress={calibrarSensor} title="Calibrar"></Button>
       </ThemedView>
-      {/* <ThemedView style={styles.optionContainer}>
-        <ThemedText>Ajuda</ThemedText>
-      </ThemedView> */}
 
-      {/* Gráficos e Introdução podem ser adicionados aqui */}
       {/* Display the countdown */}
       {countdown > 0 && (
         <View style={styles.countdownContainer}>
