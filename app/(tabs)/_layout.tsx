@@ -27,7 +27,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="market"
         options={{
           title: "Market",
@@ -38,7 +38,7 @@ export default function TabLayout() {
             />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="explore"
         options={{
